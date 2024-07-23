@@ -10,13 +10,7 @@ RUN apt-get update && apt-get install -y \
     git \
     build-essential \
     software-properties-common \
-    curl \
-    cmake \
-    libssl-dev \
-    libcurl4-openssl-dev \
-    libgtest-dev \
-    gdb \
-    clang-format
+    curl
 
 # Add the pistache PPA and install pistache
 RUN sudo add-apt-repository ppa:pistache+team/unstable && \
@@ -30,10 +24,7 @@ RUN git clone https://github.com/jvlavan/cpp-api-ems.git
 WORKDIR /cpp-api-ems
 
 # Compile the C++ project with C++17 standard
-RUN mkdir -p build && \
-    cd build && \
-    cmake -DCMAKE_CXX_STANDARD=17 .. && \
-    make
+RUN g++ -std=c++17 -o ems-rest-final main.cpp -lpistache -lpthread
 
 # Install Node.js and http-server to serve index.html
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && \
@@ -44,4 +35,4 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && \
 EXPOSE 9082
 
 # Start the C++ application and serve the index.html file
-CMD ./build/ems-rest-final & http-server public -p 9082
+CMD ./ems-rest-final & http-server public -p 9082
