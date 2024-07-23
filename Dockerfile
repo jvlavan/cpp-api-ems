@@ -35,4 +35,4 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && \
 EXPOSE 9082
 
 # Start the C++ application and serve the index.html file
-CMD ./ems-rest-final & http-server public -p 9082
+CMD ./ems-rest-final & http-server public -p 10000
